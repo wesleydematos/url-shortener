@@ -30,7 +30,15 @@ public class UrlShorterRestController {
 	
 	@RequestMapping(value="/s/{randomstring}", method=RequestMethod.GET)
 	public void getFullUrl(HttpServletResponse response, @PathVariable("randomstring") String randomString) throws IOException {
+        incrementAccessCount(randomString);
 		response.sendRedirect(shortenUrlList.get(randomString).getFull_url());
+	}
+
+    @RequestMapping(value="/statics/s/{shortenedUrl}", method=RequestMethod.GET)
+	public ResponseEntity<Object> getStats( @PathVariable("shortenedUrl") String shortenedUrl) throws IOException {
+		Object url = shortenUrlList.get(shortenedUrl);
+
+        return new ResponseEntity<Object>(url, HttpStatus.OK);
 	}
 
 	private void setShortUrl(String randomChar, ShortenUrl shortenUrl) throws MalformedURLException {
@@ -45,5 +53,10 @@ public class UrlShorterRestController {
 			randomStr += possibleChars.charAt((int) Math.floor(Math.random() * possibleChars.length()));
 		return randomStr;
 	}
+
+    public void incrementAccessCount(String shortenedUrl) {
+        int acess_count = shortenUrlList.get(shortenedUrl).getAcess_count();
+        shortenUrlList.get(shortenedUrl).setAcess_count(acess_count + 1);
+    }
 		
 }
