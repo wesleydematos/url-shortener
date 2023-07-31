@@ -34,7 +34,7 @@ public class UrlShorterRestController {
 		response.sendRedirect(shortenUrlList.get(randomString).getFull_url());
 	}
 
-    @RequestMapping(value="/statics/s/{shortenedUrl}", method=RequestMethod.GET)
+    @RequestMapping(value="/stats/s/{shortenedUrl}", method=RequestMethod.GET)
 	public ResponseEntity<Object> getStats( @PathVariable("shortenedUrl") String shortenedUrl) throws IOException {
 		Object url = shortenUrlList.get(shortenedUrl);
 
