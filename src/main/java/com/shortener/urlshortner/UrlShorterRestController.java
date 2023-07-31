@@ -41,6 +41,11 @@ public class UrlShorterRestController {
         return new ResponseEntity<Object>(url, HttpStatus.OK);
 	}
 
+	@RequestMapping(value="/urls", method=RequestMethod.GET)
+	public Map<String, ShortenUrl> getUrls()  {
+		return shortenUrlList;
+	}
+
 	private void setShortUrl(String randomChar, ShortenUrl shortenUrl) throws MalformedURLException {
 		 shortenUrl.setShort_url("http://localhost:8080/s/"+randomChar);
 		 shortenUrlList.put(randomChar, shortenUrl);
